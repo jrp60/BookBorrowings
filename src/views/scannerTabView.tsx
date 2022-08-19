@@ -14,7 +14,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const scannerTabView = () => {
+const ScannerTabView = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -30,4 +30,4 @@ const scannerTabView = () => {
   );
 };
 
-export default scannerTabView;
+export default ScannerTabView;

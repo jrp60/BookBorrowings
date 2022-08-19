@@ -1,28 +1,26 @@
 /** @format */
 
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 //import MySearchBar from "../components/Searchbar";
 import BookList from '../components/bookList';
 import React from 'react';
 // <MySearchBar></MySearchBar>
 
-const libraryTabView = () => {
+const LibraryTabView = () => {
+  const [book, onChangeText] = React.useState('Useless Text');
+
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeText}
+        value={book}
+        placeholder="Busca un libro"
+      />
       <BookList></BookList>
     </View>
   );
 };
-
-/* SEPARATOR ARRIBA DE BOOKLIST Y ABAJO DEL BUSCADOR
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      */
-
-/*<EditScreenInfo path="/screens/TabOneScreen.tsx" />*/
 
 const styles = StyleSheet.create({
   container: {
@@ -34,11 +32,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  separator: {
-    marginVertical: 0,
-    height: 1,
-    width: '100%',
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
   },
 });
 
-export default libraryTabView;
+export default LibraryTabView;

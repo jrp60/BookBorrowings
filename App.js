@@ -8,75 +8,43 @@ import {
   Text,
   useColorScheme,
   View,
+  Pressable,
 } from 'react-native';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import {NavigationContainer} from '@react-navigation/native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import scannerTabView from './src/views/scannerTabView';
-import libraryTabView from './src/views/libraryTabView';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import ScannerTabView from './src/views/scannerTabView';
+import LibraryTabView from './src/views/libraryTabView';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'rgb(255, 45, 85)',
+    background: 'rgb(255, 255, 255)',
+  },
+};
 
 const App: () => Node = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Tab.Navigator>
-        <Tab.Screen name="Library" component={libraryTabView} />
-        <Tab.Screen name="Scanner" component={scannerTabView} />
+        <Tab.Screen
+          name="Library"
+          component={LibraryTabView}
+          options={({navigation}: RootTabScreenProps<'TabOne'>) => ({
+            title: 'Biblioteca',
+            tabBarIcon: ({color}) => (
+              <Ionicons name="add" size={28} color={color} />
+            ),
+          })}
+        />
+        <Tab.Screen name="Scanner" component={ScannerTabView} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

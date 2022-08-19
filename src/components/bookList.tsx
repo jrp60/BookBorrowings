@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
   rowContainer: {
     display: 'flex',
     flexDirection: 'row',
+    marginBottom: 10,
+    paddingBottom: 10,
+    borderBottomColor: '#222',
+    borderBottomWidth: 1,
   },
   imgContainer: {flex: 20},
   textContainer: {
@@ -88,22 +92,3 @@ const booksComponent = books.map((item, index) => (
 export default function BookList() {
   return <ScrollView style={styles.container}>{booksComponent}</ScrollView>;
 }
-
-/*
-<View style={styles.rowContainer}>
-        <View style={styles.imgContainer}>
-          <Image
-            style={styles.logoBook}
-            source={{
-              uri: "https://reactnative.dev/img/tiny_logo.png",
-            }}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{textInputComponents}</Text>
-          <Text style={styles.subtitle}>
-            React Native is an open source project created by Facebook for
-            building native apps on the React framework.
-          </Text>
-        </View>
-      </View> */
