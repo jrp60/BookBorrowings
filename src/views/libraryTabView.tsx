@@ -1,10 +1,9 @@
 /** @format */
 
 import {StyleSheet, TextInput, View} from 'react-native';
-//import MySearchBar from "../components/Searchbar";
 import BookList from '../components/bookList';
 import React from 'react';
-// <MySearchBar></MySearchBar>
+import BookDetailView from './bookDetailView';
 
 const LibraryTabView = () => {
   const [book, onChangeText] = React.useState('');
@@ -18,6 +17,7 @@ const LibraryTabView = () => {
         placeholder="Busca un libro"
       />
       <BookList></BookList>
+      <BookDetailView></BookDetailView>
     </View>
   );
 };
