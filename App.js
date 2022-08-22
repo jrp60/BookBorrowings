@@ -37,11 +37,20 @@ const App: () => Node = () => {
           options={({navigation}: RootTabScreenProps<'TabOne'>) => ({
             title: 'Biblioteca',
             tabBarIcon: ({color}) => (
-              <Ionicons name="add" size={28} color={color} />
+              <Ionicons name="library-outline" size={28} color={color} />
             ),
           })}
         />
-        <Tab.Screen name="Scanner" component={ScannerTabView} />
+        <Tab.Screen
+          name="Scanner"
+          component={ScannerTabView}
+          options={({navigation}: RootTabScreenProps<'TabTwo'>) => ({
+            title: 'Scanner',
+            tabBarIcon: ({color}) => (
+              <Ionicons name="qr-code-outline" size={28} color={color} />
+            ),
+          })}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

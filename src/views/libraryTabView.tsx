@@ -7,7 +7,7 @@ import React from 'react';
 // <MySearchBar></MySearchBar>
 
 const LibraryTabView = () => {
-  const [book, onChangeText] = React.useState('Useless Text');
+  const [book, onChangeText] = React.useState('');
 
   return (
     <View style={styles.container}>
