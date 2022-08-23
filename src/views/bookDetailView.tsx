@@ -37,7 +37,10 @@ function DropdownLending() {
   );
 }
 
-const BookDetailView = () => {
+const BookDetailView = ({navigation, route}) => {
+  const {book, id} = route.params;
+  navigation.setOptions({title: JSON.stringify(book.title)});
+
   return (
     <View style={styles.container}>
       <View style={styles.imgContainer}>
@@ -48,7 +51,7 @@ const BookDetailView = () => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>El libro de la selva de los vivos</Text>
-        <Text style={styles.author}>Autor del libro</Text>
+        <Text style={styles.author}>{JSON.stringify(id)}</Text>
         <DropdownLending />
         <ScrollView>
           <Text style={styles.tag}>Fecha de publicación</Text>

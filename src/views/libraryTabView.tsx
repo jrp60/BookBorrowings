@@ -4,8 +4,11 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import BookList from '../components/bookList';
 import React from 'react';
 import BookDetailView from './bookDetailView';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const LibraryTabView = () => {
+const Stack = createNativeStackNavigator();
+
+const LibraryTabView = ({navigation}) => {
   const [book, onChangeText] = React.useState('');
 
   return (
@@ -16,9 +19,21 @@ const LibraryTabView = () => {
         value={book}
         placeholder="Busca un libro"
       />
-      <BookList></BookList>
-      <BookDetailView></BookDetailView>
+      <BookList navigation={navigation}></BookList>
     </View>
+  );
+};
+
+const LibraryTabView1 = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Biblioteca" component={LibraryTabView} />
+      <Stack.Screen
+        name="BookDetail"
+        component={BookDetailView}
+        options={{title: 'Tteee'}}
+      />
+    </Stack.Navigator>
   );
 };
 
@@ -41,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LibraryTabView;
+export default LibraryTabView1;

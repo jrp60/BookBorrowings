@@ -34,8 +34,11 @@ const App: () => Node = () => {
         <Tab.Screen
           name="Library"
           component={LibraryTabView}
+          screenOptions={{headerShown: false}}
           options={({navigation}: RootTabScreenProps<'TabOne'>) => ({
             title: 'Biblioteca',
+            //screenOptions: {headerShown: false},
+            headerShown: false,
             tabBarIcon: ({color}) => (
               <Ionicons name="library-outline" size={28} color={color} />
             ),

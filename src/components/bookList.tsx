@@ -1,7 +1,16 @@
 /** @format */
 
 import React from 'react';
-import {ScrollView, StyleSheet, Image, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import {ZoomIn} from 'react-native-reanimated';
+import BookDetailView from '../views/bookDetailView';
 
 var books = [
   {
@@ -41,6 +50,43 @@ var books = [
     subtitle: 'Pedro M.J.',
   },
 ];
+
+const booksComponent = navigation => {
+  return (
+    <View style={styles.container}>
+      {books.map((book, index) => (
+        <TouchableOpacity
+          key={book.id}
+          onPress={() =>
+            navigation.navigate('BookDetail', {
+              screen: 'BookDetail',
+              book: book,
+              id: 'probando',
+            })
+          }>
+          <View style={styles.rowContainer}>
+            <View style={styles.imgContainer}>
+              <Image source={{uri: book.image}} style={styles.image} />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>{book.title}</Text>
+              <Text style={styles.subtitle}>{book.subtitle}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
+
+const BookList = ({navigation}) => {
+  return (
+    <ScrollView style={styles.container}>
+      {booksComponent(navigation)}
+    </ScrollView>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     margin: 10,
@@ -60,7 +106,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
-  logoBook: {width: '100%', height: 160},
+  image: {width: '100%', height: 160},
   title: {fontSize: 20, fontWeight: 'bold', marginTop: 5},
   subtitle: {fontSize: 16},
   separator: {
@@ -70,25 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const booksComponent = books.map((item, index) => (
-  <View key={index}>
-    <View style={styles.rowContainer}>
-      <View style={styles.imgContainer}>
-        <Image style={styles.logoBook} source={{uri: item.image}} />
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.subtitle}>{item.subtitle}</Text>
-      </View>
-    </View>
-  </View>
-));
-
-/* <View
-      style={styles.separator}
-      lightColor="#eee"
-      darkColor="rgba(255,255,255,0.1)"></View> */
-
-export default function BookList() {
-  return <ScrollView style={styles.container}>{booksComponent}</ScrollView>;
-}
+export default BookList;
