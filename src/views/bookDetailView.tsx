@@ -1,45 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
 import {useState} from 'react';
-import DropDownPicker from 'react-native-dropdown-picker';
-
-function DropdownLending() {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [users, setUsers] = useState([
-    {label: 'Antonio Garcia', value: '1'},
-    {label: 'Juan Francisco Baeza', value: '2'},
-  ]);
-
-  var placeholder = 'Selecciona a un usuario';
-  var disabled = false;
-  //TODO : change users to books
-  if (users.length === 0) {
-    placeholder = 'No hay libros disponibles';
-    disabled = true;
-  }
-
-  return (
-    <DropDownPicker
-      open={open}
-      value={value}
-      items={users}
-      disabled={disabled}
-      disabledStyle={{
-        opacity: 0.3,
-      }}
-      placeholder={placeholder}
-      setOpen={setOpen}
-      setValue={setValue}
-      setItems={setUsers}
-      containerStyle={{maxWidth: '98%', marginTop: 10}}
-    />
-  );
-}
+import DropdownBorrowing from '../components/DropdownBorrowing';
 
 const BookDetailView = ({navigation, route}) => {
   const {book, id} = route.params;
-  navigation.setOptions({title: JSON.stringify(book.title)});
+
+  useEffect(() => {
+    navigation.setOptions({title: JSON.stringify(book.title)});
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -52,7 +21,7 @@ const BookDetailView = ({navigation, route}) => {
       <View style={styles.textContainer}>
         <Text style={styles.title}>El libro de la selva de los vivos</Text>
         <Text style={styles.author}>{JSON.stringify(id)}</Text>
-        <DropdownLending />
+        <DropdownBorrowing />
         <ScrollView>
           <Text style={styles.tag}>Fecha de publicación</Text>
           <Text style={styles.subtitle}>26-01-2000</Text>
@@ -86,6 +55,7 @@ const BookDetailView = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
   },
   imgContainer: {},
   textContainer: {

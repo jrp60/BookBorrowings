@@ -1,16 +1,8 @@
 /** @format */
 
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Image,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import {ZoomIn} from 'react-native-reanimated';
-import BookDetailView from '../views/bookDetailView';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import BookComponent from './BookComponent';
 
 var books = [
   {
@@ -51,38 +43,14 @@ var books = [
   },
 ];
 
-const booksComponent = navigation => {
-  return (
-    <View style={styles.container}>
-      {books.map((book, index) => (
-        <TouchableOpacity
-          key={book.id}
-          onPress={() =>
-            navigation.navigate('BookDetail', {
-              screen: 'BookDetail',
-              book: book,
-              id: 'probando',
-            })
-          }>
-          <View style={styles.rowContainer}>
-            <View style={styles.imgContainer}>
-              <Image source={{uri: book.image}} style={styles.image} />
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={styles.title}>{book.title}</Text>
-              <Text style={styles.subtitle}>{book.subtitle}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-};
-
 const BookList = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
-      {booksComponent(navigation)}
+      <View style={styles.container}>
+        {books.map((book, index) => (
+          <BookComponent navigation={navigation} book={book} key={index} />
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -90,29 +58,6 @@ const BookList = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-  },
-  rowContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: 10,
-    paddingBottom: 10,
-    borderBottomColor: '#222',
-    borderBottomWidth: 1,
-  },
-  imgContainer: {flex: 20},
-  textContainer: {
-    flex: 80,
-    paddingLeft: 10,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  image: {width: '100%', height: 160},
-  title: {fontSize: 20, fontWeight: 'bold', marginTop: 5},
-  subtitle: {fontSize: 16},
-  separator: {
-    marginVertical: 0,
-    height: 1,
-    width: '100%',
   },
 });
 

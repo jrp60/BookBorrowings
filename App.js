@@ -13,8 +13,8 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ScannerTabView from './src/views/scannerTabView';
-import LibraryTabView from './src/views/libraryTabView';
+import ScannerTabView from './src/views/ScannerTabView';
+import LibraryTabView from './src/views/LibraryTabView';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();

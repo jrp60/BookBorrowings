@@ -1,9 +1,9 @@
 /** @format */
 
 import {StyleSheet, TextInput, View} from 'react-native';
-import BookList from '../components/bookList';
+import BookList from '../components/BookList';
 import React from 'react';
-import BookDetailView from './bookDetailView';
+import BookDetailView from './BookDetailView';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
