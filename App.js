@@ -15,19 +15,48 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ScannerTabView from './src/views/ScannerTabView';
 import LibraryTabView from './src/views/LibraryTabView';
+import LoginView from './src/views/LoginView';
+import HomeView from './src/views/HomeView';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import {
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from '../types';
+
+const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'rgb(255, 45, 85)',
+    primary: '#5BB5F1',
     background: 'rgb(255, 255, 255)',
   },
 };
 
 const App: () => Node = () => {
+  return (
+    <NavigationContainer theme={MyTheme}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="Login" component={LoginView} />
+        <Stack.Screen
+          name="HomeView"
+          component={HomeView}
+          options={{title: 'Tteee'}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const App2 = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Tab.Navigator>
