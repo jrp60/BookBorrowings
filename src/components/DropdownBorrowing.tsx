@@ -1,5 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const DropdownBorrowing = () => {
@@ -31,9 +32,24 @@ const DropdownBorrowing = () => {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setUsers}
-      containerStyle={{maxWidth: '98%', marginTop: 10}}
+      containerStyle={{
+        maxWidth: '95%',
+        marginTop: 16,
+        marginBottom: 16,
+        marginLeft: '2%',
+      }}
+      style={styles.container}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+});
 
 export default DropdownBorrowing;

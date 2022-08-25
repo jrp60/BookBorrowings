@@ -22,6 +22,9 @@ const LoginView = ({navigation}) => {
       alert('Invalid user or password');
     }
   };
+  const forgotPassword = () => {
+    alert('Forgot password');
+  };
 
   return (
     <SafeAreaView>
@@ -44,9 +47,24 @@ const LoginView = ({navigation}) => {
             secureTextEntry
           />
 
-          <TouchableOpacity onPress={() => validateUser()}>
-            <CustomButton />
-          </TouchableOpacity>
+          <CustomButton
+            onPress={validateUser}
+            text="Login"
+            style={styles.btnContainer}
+          />
+
+          <CustomButton
+            onPress={forgotPassword}
+            text="Recordar contraseña"
+            style={styles.btnContainer}
+            type="secondary"
+          />
+          <CustomButton
+            onPress={() => navigation.navigate('Signup')}
+            text="¿No tienes cuenta? Crear una"
+            style={styles.btnContainer}
+            type="secondary"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -75,6 +93,9 @@ const styles = StyleSheet.create({
     margin: 10,
     width: '70%',
     maxWidth: 300,
+  },
+  btnContainer: {
+    margin: 10,
   },
 });
 

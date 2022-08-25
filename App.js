@@ -25,6 +25,7 @@ import {
   RootTabParamList,
   RootTabScreenProps,
 } from '../types';
+import SignUpView from './src/views/SignUpView';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ const App: () => Node = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="Login" component={LoginView} />
+        <Stack.Screen name="Signup" component={SignUpView} />
         <Stack.Screen
           name="HomeView"
           component={HomeView}

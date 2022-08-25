@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   imgContainer: {},
   textContainer: {
     marginTop: 10,
-    padding: 10,
+    padding: 16,
   },
   logoBook: {
     //width: "100%",
@@ -74,11 +74,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 5,
     marginVertical: 5,
+    textAlign: 'center',
   },
   author: {
     fontSize: 15,
     //marginTop: 5,
     marginVertical: 10,
+    textAlign: 'center',
   },
   tag: {
     fontSize: 12,
