@@ -1,42 +1,35 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StatusBar,
-  useColorScheme,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import React, {useState} from 'react';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 
 const ScannerTabView = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const [isbn, setIsbn] = useState('');
+  const getISBN = (isbn: string) => {
+    console.log('ISBN leido: ', isbn);
+    setIsbn(isbn);
   };
 
   return (
     <QRCodeScanner
-      onRead={e => console.log(e)}
-      flashMode={RNCamera.Constants.FlashMode.torch}
+      onRead={e => getISBN(e.data)}
+      fadeIn={true}
+      reactivate={true}
+      reactivateTimeout={3000}
+      showMarker={true}
+      markerStyle={{
+        borderColor: '#5BB5F1',
+        borderWidth: 2,
+        borderRadius: 2,
+      }}
       topContent={
         <Text style={styles.centerText}>
-          Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text>{' '}
-          on your computer and scan the QR code.
+          Sitúe el código de barras en el campo de la cámara
         </Text>
       }
       bottomContent={
         <TouchableOpacity style={styles.buttonTouchable}>
-          <Text style={styles.buttonText}>OK. Got it!</Text>
+          <Text style={styles.buttonText}></Text>
         </TouchableOpacity>
       }
     />
@@ -49,6 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 32,
     color: '#777',
+    textAlign: 'center',
   },
   textBold: {
     fontWeight: '500',
