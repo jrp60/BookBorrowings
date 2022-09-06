@@ -5,7 +5,7 @@ interface CustomButtonInterface {
   onPress: () => void;
   text: string;
   style?: any;
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'tertiary';
 }
 
 const CustomButton = ({
@@ -29,18 +29,22 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     width: '80%',
+    margin: 10,
   },
   touchable_primary: {
     backgroundColor: '#89CFFD',
   },
   touchable_secondary: {
     backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  touchable_tertiary: {
+    backgroundColor: '#fff',
   },
   touchableStyle: {
     flex: 1,
     width: '100%',
-    maxWidth: 300,
-    //backgroundColor: '#89CFFD',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 10,
@@ -51,10 +55,12 @@ const styles = StyleSheet.create({
   text_primary: {
     color: '#fff',
     fontSize: 20,
-    //fontWeight: 'bold',
   },
   text_secondary: {
-    color: '#444',
+    color: '#000',
+  },
+  text_tertiary: {
+    color: '#333',
   },
 });
 

@@ -79,7 +79,7 @@ const SignUpView = ({navigation}) => {
             onPress={() => navigation.goBack()}
             text="¿Tienes cuenta? Accede"
             style={styles.btnContainer}
-            type="secondary"
+            type="tertiary"
           />
         </View>
       </ScrollView>

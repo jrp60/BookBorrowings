@@ -26,7 +26,7 @@ import {
 } from '../types';
 import SignUpView from './src/views/SignUpView';
 //DATABASE
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
 
 const Stack = createNativeStackNavigator();
@@ -44,7 +44,7 @@ const MyTheme = {
 const App: () => Node = () => {
   //DATABASE
   //Before using the SDK...
-  //Parse.setAsyncStorage(AsyncStorage);
+  Parse.setAsyncStorage(AsyncStorage);
   const PARSE_APP_ID = 'DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06';
   const PARSE_JS_KEY = 'hN9ld6RZ59a80273mEelW2PstcfTZaD1Y47RGhKx';
   const PARSE_SERVER_URL = 'https://parseapi.back4app.com/';
@@ -53,13 +53,14 @@ const App: () => Node = () => {
 
   const [person, setPerson] = useState(new Parse.Object('Person'));
 
+  /*
   //This funciton will save a simple Person object
   async function addPerson() {
     try {
       //create a new Parse Object instance
       const newPerson = new Parse.Object('Person');
       //define the attributes you want for your Object
-      newPerson.set('name', 'Johny');
+      newPerson.set('name', 'Johny Bel');
       newPerson.set('email', 'john@back4app.com');
       //save it on Back4App Data Store
       await newPerson.save();
@@ -82,12 +83,13 @@ const App: () => Node = () => {
     console.log('person email: ', currentPerson.get('email'));
     setPerson(currentPerson);
   }
+  */
 
   useEffect(() => {
-    console.log('USE EFFECT!!');
+    //console.log('USE EFFECT!!');
     //addPerson();
-    console.log('And now fetch!');
-    fetchPerson();
+    //console.log('And now fetch!');
+    //fetchPerson();
   }, []);
   /** */
   return (

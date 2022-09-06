@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {RNCamera} from 'react-native-camera';
 import Parse from 'parse/react-native';
+import ModalBookView from './ModalBookView';
 
 const ScannerTabView = () => {
   const [isbn, setIsbn] = useState('');
@@ -12,9 +12,41 @@ const ScannerTabView = () => {
     setIsbn(isbn);
   };
 
-  const readIsbn = (isbn: string) => {
+  const checkIfExists = async (isbn: string) => {
+    console.log('CHECKING....');
+
+    let query = new Parse.Query('book');
+    query.equalTo('isbn', isbn);
+    await query.find().then(
+      //let queryResult = await query.findAll().then(
+      object => {
+        console.log('object: ', object);
+        // navigate ?
+      },
+      error => {
+        console.log('ERROR: ', error);
+        if (error.code === 101) {
+          console.log('No existe');
+          alert('No existe el libro seleccionado en la base de datos');
+        }
+        return false;
+      },
+    );
+    console.log('After check');
+  };
+
+  const readIsbn = async (isbn: string) => {
     setIsbn(isbn);
     console.log('ISBN leido: ', isbn);
+    setShowBottomContent(true);
+    /*if(await checkIfExists(isbn)) {
+      console.log('El libro ya existe');
+    }*/
+    checkIfExists(isbn);
+    showModal();
+  };
+
+  const showModal = () => {
     setShowBottomContent(true);
   };
 
@@ -23,21 +55,53 @@ const ScannerTabView = () => {
     //create your Parse Query using the Person Class you've created
     let query = new Parse.Query('Person');
     //run the query to retrieve all objects on Person class, optionally you can add your filters
-    let queryResult = await query.findAll();
+    let queryResult = await query.findAll().then(
+      objects => {
+        //pick the first result
+        const currentPerson = objects[0];
+        //access the Parse Object attributes
+        console.log('person id: ', currentPerson.get('objectId'));
+        console.log('person name: ', currentPerson.get('name'));
+        console.log('person email: ', currentPerson.get('email'));
+        setPerson(currentPerson);
+      },
+      error => {
+        //The query returned an error
+        console.log('error', error);
+      },
+    );
+  }
+
+  //in new view
+  /*
+  async function fetchPersonById(id: string) {
+    //create your Parse Query using the Person Class you've created
+    let query = new Parse.Query('Person');
+    //run the query to retrieve all objects on Person class, optionally you can add your filters
+    let queryResult = await query.get(id);
     //pick the first result
-    const currentPerson = queryResult[0];
+    const currentPerson = queryResult;
     //access the Parse Object attributes
     console.log('person id: ', currentPerson.get('id'));
     console.log('person name: ', currentPerson.get('name'));
     console.log('person email: ', currentPerson.get('email'));
     setPerson(currentPerson);
   }
+  */
+
   const openBook = () => {
     console.log('ISBN: ', isbn);
     console.log('person: ', person);
     console.log('And now fetch!');
     fetchPerson();
   };
+
+  useEffect(() => {
+    console.log('USE EFFECT 2!!');
+    readIsbn('780194791830');
+    console.log('And now fetch!');
+    //fetchPerson();
+  }, []);
 
   return (
     <QRCodeScanner
@@ -58,9 +122,12 @@ const ScannerTabView = () => {
       }
       {...(showBottomContent && {
         bottomContent: (
-          <TouchableOpacity style={styles.buttonTouchable} onPress={openBook}>
-            <Text style={styles.buttonText}>Ver Libro</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity style={styles.buttonTouchable} onPress={openBook}>
+              <Text style={styles.buttonText}>Ver Libro</Text>
+            </TouchableOpacity>
+            <ModalBookView />
+          </View>
         ),
       })}
     />

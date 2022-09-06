@@ -57,13 +57,13 @@ const LoginView = ({navigation}) => {
             onPress={forgotPassword}
             text="Recordar contraseña"
             style={styles.btnContainer}
-            type="secondary"
+            type="tertiary"
           />
           <CustomButton
             onPress={() => navigation.navigate('Signup')}
             text="¿No tienes cuenta? Crear una"
             style={styles.btnContainer}
-            type="secondary"
+            type="tertiary"
           />
         </View>
       </ScrollView>
