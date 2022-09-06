@@ -38,7 +38,7 @@ const ScannerTabView = () => {
   const readIsbn = async (isbn: string) => {
     setIsbn(isbn);
     console.log('ISBN leido: ', isbn);
-    setShowBottomContent(true);
+
     /*if(await checkIfExists(isbn)) {
       console.log('El libro ya existe');
     }*/
@@ -89,16 +89,9 @@ const ScannerTabView = () => {
   }
   */
 
-  const openBook = () => {
-    console.log('ISBN: ', isbn);
-    console.log('person: ', person);
-    console.log('And now fetch!');
-    fetchPerson();
-  };
-
   useEffect(() => {
     console.log('USE EFFECT 2!!');
-    readIsbn('780194791830');
+    //readIsbn('780194791830');
     console.log('And now fetch!');
     //fetchPerson();
   }, []);
@@ -110,22 +103,11 @@ const ScannerTabView = () => {
       reactivate={true}
       reactivateTimeout={3000}
       showMarker={true}
-      markerStyle={{
-        borderColor: '#5BB5F1',
-        borderWidth: 2,
-        borderRadius: 2,
-      }}
-      topContent={
-        <Text style={styles.centerText}>
-          Sitúe el código de barras en el campo de la cámara
-        </Text>
-      }
+      markerStyle={styles.markerStyle}
+      cameraStyle={styles.cameraStyle}
       {...(showBottomContent && {
         bottomContent: (
           <View>
-            <TouchableOpacity style={styles.buttonTouchable} onPress={openBook}>
-              <Text style={styles.buttonText}>Ver Libro</Text>
-            </TouchableOpacity>
             <ModalBookView />
           </View>
         ),
@@ -135,23 +117,13 @@ const ScannerTabView = () => {
 };
 
 const styles = StyleSheet.create({
-  centerText: {
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: '#777',
-    textAlign: 'center',
+  markerStyle: {
+    borderColor: '#5BB5F1',
+    borderWidth: 2,
+    borderRadius: 2,
   },
-  textBold: {
-    fontWeight: '500',
-    color: '#000',
-  },
-  buttonText: {
-    fontSize: 21,
-    color: 'rgb(0,122,255)',
-  },
-  buttonTouchable: {
-    padding: 16,
+  cameraStyle: {
+    height: '100%',
   },
 });
 

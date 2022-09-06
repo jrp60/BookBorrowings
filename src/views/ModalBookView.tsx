@@ -4,9 +4,9 @@ import {
   Modal,
   StyleSheet,
   Text,
-  Pressable,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import DropdownBorrowing from '../components/DropdownBorrowing';
 import CustomButton from '../components/CustomButton';
@@ -26,7 +26,12 @@ const ModalBookView = () => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.centeredView}>
+        <TouchableOpacity
+          style={styles.centeredView}
+          activeOpacity={1}
+          onPressOut={() => {
+            setModalVisible(false);
+          }}>
           <View style={styles.modalView}>
             <View style={styles.imgContainer}>
               <Image
@@ -46,27 +51,20 @@ const ModalBookView = () => {
               type="secondary"
             />
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
+      <CustomButton
+        text="Ver libro"
+        onPress={() => setModalVisible(true)}
+        type="secondary"
+        style={styles.buttonAbove}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-  },
   imgContainer: {},
-  textContainer: {
-    marginTop: 10,
-    padding: 0,
-  },
   logoBook: {
     height: 120,
     maxHeight: 120,
@@ -79,16 +77,23 @@ const styles = StyleSheet.create({
     width: 266,
     left: 2,
   },
+  buttonAbove: {
+    marginTop: 10,
+    height: 40,
+    maxWidth: 900,
+    width: 266,
+    position: 'absolute',
+    bottom: 70,
+    backgroundColor: 'transparent',
+  },
   title: {
     fontSize: 18,
     marginTop: 5,
     marginVertical: 5,
-    textAlign: 'center',
   },
   author: {
     fontSize: 16,
     marginVertical: 10,
-    textAlign: 'center',
   },
   centeredView: {
     flex: 1,
@@ -98,8 +103,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
+    backgroundColor: '#fff',
+    borderRadius: 4,
     padding: 35,
     paddingVertical: 50,
     alignItems: 'center',
@@ -111,22 +116,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  button: {
-    borderRadius: 4,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
 
