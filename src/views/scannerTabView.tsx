@@ -7,21 +7,57 @@ import ModalBookView from './ModalBookView';
 const ScannerTabView = () => {
   const [isbn, setIsbn] = useState('');
   const [showBottomContent, setShowBottomContent] = useState(false);
-  const getISBN = (isbn: string) => {
-    console.log('ISBN leido: ', isbn);
+  const [bookData, setBookData] = useState({
+    author: '',
+    title: '',
+    isbn: '',
+    cover: '',
+  });
+
+  const readIsbn = async (isbn: string) => {
     setIsbn(isbn);
+    console.log('ISBN leido: ', isbn);
+    checkIfExists(isbn);
   };
 
   const checkIfExists = async (isbn: string) => {
     console.log('CHECKING....');
+    console.log('ISBN: ', isbn);
 
     let query = new Parse.Query('book');
     query.equalTo('isbn', isbn);
     await query.find().then(
-      //let queryResult = await query.findAll().then(
       object => {
-        console.log('object: ', object);
-        // navigate ?
+        console.log('object: ', object[0]);
+
+        //TODO: check
+        setBookData({
+          author: object[0].get('author'),
+          title: object[0].get('title'),
+          isbn: object[0].get('isbn'),
+          cover: object[0].get('cover'),
+        });
+
+        console.log('author: ', object[0].get('author'));
+
+        console.log('bookData in scanner: ', bookData);
+        console.log('Show modal now:');
+
+        showModal();
+
+        if (object.length == 0) {
+          console.log('NO existe el libro');
+
+          alert('No existe');
+        }
+        if (object.empty) {
+          console.log('No existe 2');
+          alert('No existe');
+        }
+        if (object == null) {
+          console.log('No existe 3');
+          alert('No existe');
+        }
       },
       error => {
         console.log('ERROR: ', error);
@@ -35,42 +71,9 @@ const ScannerTabView = () => {
     console.log('After check');
   };
 
-  const readIsbn = async (isbn: string) => {
-    setIsbn(isbn);
-    console.log('ISBN leido: ', isbn);
-
-    /*if(await checkIfExists(isbn)) {
-      console.log('El libro ya existe');
-    }*/
-    checkIfExists(isbn);
-    showModal();
-  };
-
   const showModal = () => {
     setShowBottomContent(true);
   };
-
-  const [person, setPerson] = useState(new Parse.Object('Person'));
-  async function fetchPerson() {
-    //create your Parse Query using the Person Class you've created
-    let query = new Parse.Query('Person');
-    //run the query to retrieve all objects on Person class, optionally you can add your filters
-    let queryResult = await query.findAll().then(
-      objects => {
-        //pick the first result
-        const currentPerson = objects[0];
-        //access the Parse Object attributes
-        console.log('person id: ', currentPerson.get('objectId'));
-        console.log('person name: ', currentPerson.get('name'));
-        console.log('person email: ', currentPerson.get('email'));
-        setPerson(currentPerson);
-      },
-      error => {
-        //The query returned an error
-        console.log('error', error);
-      },
-    );
-  }
 
   //in new view
   /*
@@ -89,12 +92,21 @@ const ScannerTabView = () => {
   }
   */
 
+  const createBottomContent = () => {
+    console.log('CREATING BOTTOM CONTENT');
+
+    return (
+      <View>
+        <ModalBookView bookData={bookData} isbn={isbn} />
+      </View>
+    );
+  };
+  //readIsbn('780194791830');
+
   useEffect(() => {
-    console.log('USE EFFECT 2!!');
+    console.log('USE EFFECT in ScannerTabView');
     //readIsbn('780194791830');
-    console.log('And now fetch!');
-    //fetchPerson();
-  }, []);
+  });
 
   return (
     <QRCodeScanner
@@ -106,11 +118,7 @@ const ScannerTabView = () => {
       markerStyle={styles.markerStyle}
       cameraStyle={styles.cameraStyle}
       {...(showBottomContent && {
-        bottomContent: (
-          <View>
-            <ModalBookView />
-          </View>
-        ),
+        bottomContent: createBottomContent(),
       })}
     />
   );

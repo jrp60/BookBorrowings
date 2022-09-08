@@ -11,10 +11,11 @@ import {
 import DropdownBorrowing from '../components/DropdownBorrowing';
 import CustomButton from '../components/CustomButton';
 
-const ModalBookView = () => {
+const ModalBookView = ({bookData, isbn}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  //const {book, id} = route.params;
-  const author = 'Jorge Luis Borges';
+  //const [book, setBook] = useState(bookData);
+  console.log('ISBN in modal: ', isbn);
+  console.log('bookData in modal out: ', bookData);
 
   return (
     <View style={styles.centeredView}>
@@ -34,15 +35,10 @@ const ModalBookView = () => {
           }}>
           <View style={styles.modalView}>
             <View style={styles.imgContainer}>
-              <Image
-                source={require('./../../assets/images/logo.png')}
-                style={styles.logoBook}
-              />
+              <Image source={{uri: bookData.cover}} style={styles.logoBook} />
             </View>
-            <Text style={styles.title}>
-              El libro de la selva de los vivos 2
-            </Text>
-            <Text style={styles.author}>{JSON.stringify(author)}</Text>
+            <Text style={styles.title}>{bookData.title}</Text>
+            <Text style={styles.author}>{bookData.author}</Text>
             <DropdownBorrowing />
             <CustomButton
               onPress={() => setModalVisible(!modalVisible)}
