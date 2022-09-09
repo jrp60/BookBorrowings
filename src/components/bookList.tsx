@@ -13,7 +13,8 @@ var books = [
   },
   {
     id: 1,
-    image: 'https://reactnative.dev/img/tiny_logo.png',
+    image:
+      'https://parsefiles.back4app.com/DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06/ce97710e048c47e42ede334f840c7977_TSLcover.jpg',
     title: 'erkan',
     subtitle: 'Antonio García',
   },
@@ -31,13 +32,15 @@ var books = [
   },
   {
     id: 4,
-    image: 'https://reactnative.dev/img/tiny_logo.png',
+    image:
+      'https://parsefiles.back4app.com/DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06/ce97710e048c47e42ede334f840c7977_TSLcover.jpg',
     title: 'Sorot 2',
     subtitle: 'KL Munf',
   },
   {
     id: 5,
-    image: 'https://reactnative.dev/img/tiny_logo.png',
+    image:
+      'https://parsefiles.back4app.com/DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06/ce97710e048c47e42ede334f840c7977_TSLcover.jpg',
     title: 'Almin Dubkal',
     subtitle: 'Pedro M.J.',
   },

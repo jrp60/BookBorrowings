@@ -35,7 +35,11 @@ const ModalBookView = ({bookData, isbn}) => {
           }}>
           <View style={styles.modalView}>
             <View style={styles.imgContainer}>
-              <Image source={{uri: bookData.cover}} style={styles.logoBook} />
+              <Image
+                source={{uri: bookData.cover.url()}}
+                style={styles.logoBook}
+                resizeMode="contain"
+              />
             </View>
             <Text style={styles.title}>{bookData.title}</Text>
             <Text style={styles.author}>{bookData.author}</Text>
@@ -60,11 +64,17 @@ const ModalBookView = ({bookData, isbn}) => {
 };
 
 const styles = StyleSheet.create({
-  imgContainer: {},
+  imgContainer: {
+    //flex: 0.5,
+    width: 200,
+    height: 240,
+    marginBottom: 16,
+  },
   logoBook: {
-    height: 120,
-    maxHeight: 120,
-    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+    maxWidth: '100%',
+    //margin: 10,
   },
   btnContainer: {
     marginTop: 10,
@@ -98,11 +108,13 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    display: 'flex',
+    flexDirection: 'column',
     margin: 20,
     backgroundColor: '#fff',
     borderRadius: 4,
     padding: 35,
-    paddingVertical: 50,
+    paddingVertical: 40,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {

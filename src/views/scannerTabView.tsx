@@ -38,7 +38,7 @@ const ScannerTabView = () => {
           cover: object[0].get('cover'),
         });
 
-        console.log('author: ', object[0].get('author'));
+        console.log('cover: ', object[0].get('cover'));
 
         console.log('bookData in scanner: ', bookData);
         console.log('Show modal now:');
@@ -101,12 +101,11 @@ const ScannerTabView = () => {
       </View>
     );
   };
-  //readIsbn('780194791830');
 
   useEffect(() => {
     console.log('USE EFFECT in ScannerTabView');
-    //readIsbn('780194791830');
-  });
+    readIsbn('9780194791830');
+  }, []);
 
   return (
     <QRCodeScanner
@@ -118,7 +117,11 @@ const ScannerTabView = () => {
       markerStyle={styles.markerStyle}
       cameraStyle={styles.cameraStyle}
       {...(showBottomContent && {
-        bottomContent: createBottomContent(),
+        bottomContent: (
+          <View>
+            <ModalBookView bookData={bookData} isbn={isbn} />
+          </View>
+        ),
       })}
     />
   );
