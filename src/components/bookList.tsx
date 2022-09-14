@@ -1,58 +1,45 @@
 /** @format */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import BookComponent from './BookComponent';
-
-var books = [
-  {
-    id: 0,
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'hasan',
-    subtitle: 'Pedro M.J.',
-  },
-  {
-    id: 1,
-    image:
-      'https://parsefiles.back4app.com/DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06/ce97710e048c47e42ede334f840c7977_TSLcover.jpg',
-    title: 'erkan',
-    subtitle: 'Antonio García',
-  },
-  {
-    id: 2,
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'veli tres',
-    subtitle: 'Pedro M.J.',
-  },
-  {
-    id: 3,
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'diman',
-    subtitle: 'Alfonso Mozambique Artiles',
-  },
-  {
-    id: 4,
-    image:
-      'https://parsefiles.back4app.com/DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06/ce97710e048c47e42ede334f840c7977_TSLcover.jpg',
-    title: 'Sorot 2',
-    subtitle: 'KL Munf',
-  },
-  {
-    id: 5,
-    image:
-      'https://parsefiles.back4app.com/DnXMtxNJhNdaGUsqcSwUKpI7bMDY4uSkMWjGUU06/ce97710e048c47e42ede334f840c7977_TSLcover.jpg',
-    title: 'Almin Dubkal',
-    subtitle: 'Pedro M.J.',
-  },
-];
+import Parse from 'parse/react-native';
 
 const BookList = ({navigation}) => {
+  const [books, setBooksData] = useState([]);
+
+  const get5Books = () => {
+    let query = new Parse.Query('book');
+    query.limit(5);
+    query.find().then(
+      object => {
+        console.log('last 5 books: ', object);
+        setBooksData(object.map(book => book.toJSON()));
+        console.log('books: ', books);
+      },
+      error => {
+        console.log('ERROR: ', error);
+        if (error.code === 101) {
+          console.log('No existe');
+          alert('No existe el libro seleccionado en la base de datos');
+        }
+        return false;
+      },
+    );
+    console.log('after get5Books: ', books);
+  };
+
+  useEffect(() => {
+    get5Books();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container}>
-        {books.map((book, index) => (
-          <BookComponent navigation={navigation} book={book} key={index} />
-        ))}
+        {books &&
+          books.map((book, index) => (
+            <BookComponent navigation={navigation} book={book} key={index} />
+          ))}
       </View>
     </ScrollView>
   );

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Modal,
@@ -10,12 +10,87 @@ import {
 } from 'react-native';
 import DropdownBorrowing from '../components/DropdownBorrowing';
 import CustomButton from '../components/CustomButton';
+import Parse from 'parse/react-native';
 
 const ModalBookView = ({bookData, isbn}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  //const [book, setBook] = useState(bookData);
   console.log('ISBN in modal: ', isbn);
   console.log('bookData in modal out: ', bookData);
+  const [book, setBook] = useState<Parse.Object>();
+
+  const getBook = async (isbn: string) => {
+    let query = new Parse.Query('book');
+    query.equalTo('isbn', isbn);
+    await query.find().then(
+      object => {
+        console.log('object: ', object[0]);
+
+        setBook(object[0]);
+
+        console.log('book in modal: ', book);
+        console.log('Show modal now:');
+
+        if (object.length == 0) {
+          console.log('NO existe el libro');
+
+          alert('No existe');
+        }
+        if (object.empty) {
+          console.log('No existe 2');
+          alert('No existe');
+        }
+        if (object == null) {
+          console.log('No existe 3');
+          alert('No existe');
+        }
+      },
+      error => {
+        console.log('ERROR: ', error);
+        if (error.code === 101) {
+          console.log('No existe');
+          alert('No existe el libro seleccionado en la base de datos');
+        }
+        return false;
+      },
+    );
+    console.log('After check');
+  };
+
+  const createCopy = () => {
+    console.log('Creating copy');
+
+    let copy = new Parse.Object('copy');
+    copy.set('book', book);
+    copy.set('ubication', 'probando');
+    copy.set('incorporatedAt', new Date());
+    copy.save().then(
+      object => {
+        console.log('copy created: ', object);
+      },
+      error => {
+        console.log('ERROR saving copy: ', error);
+        return false;
+      },
+    );
+  };
+
+  const createBorrowing = () => {
+    let borrowing = new Parse.Object('borrowings');
+    //TODO: probar con .put y no .set
+    borrowing.set('isbn', 'test');
+    borrowing.save().then(
+      borrowing => {
+        console.log('book saved: ', borrowing);
+      },
+      error => {
+        console.log('ERROR saving book: ', error);
+      },
+    );
+  };
+
+  useEffect(() => {
+    getBook(isbn);
+  }, [isbn]);
 
   return (
     <View style={styles.centeredView}>
@@ -45,7 +120,11 @@ const ModalBookView = ({bookData, isbn}) => {
             <Text style={styles.author}>{bookData.author}</Text>
             <DropdownBorrowing />
             <CustomButton
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                createCopy();
+                //createBorrowing();
+              }}
               text="Reservar"
               style={styles.btnContainer}
               type="secondary"

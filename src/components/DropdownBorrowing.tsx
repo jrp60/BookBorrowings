@@ -22,15 +22,14 @@ const DropdownBorrowing = () => {
 
     let query = new Parse.Query('user');
     await query.findAll().then(
-      //let queryResult = await query.findAll().then(
       object => {
         console.log('object: ', object);
         setUsers(
-          object.map(user =>
-            //console.log('username: ', user.get('username')),
-            //console.log('id: ', user.id),
-            ({label: user.get('username'), value: user.id, key: user.id}),
-          ),
+          object.map(user => ({
+            label: user.get('username'),
+            value: user.id,
+            key: user.id,
+          })),
         );
       },
       error => {

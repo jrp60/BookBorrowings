@@ -2,7 +2,12 @@ import React from 'react';
 import {StyleSheet, Image, Text, View, TouchableOpacity} from 'react-native';
 
 const BookComponent = ({navigation, book}) => {
+  console.log('book in component:', book);
+  console.log('book length in component:', book.length);
+  console.log('is book empty?:', book.length === 0);
+
   return (
+    //const img = book ? uri:book.cover['url'] :
     <TouchableOpacity
       onPress={() =>
         navigation.navigate('BookDetail', {
@@ -11,19 +16,25 @@ const BookComponent = ({navigation, book}) => {
           id: 'probando',
         })
       }>
-      <View style={styles.rowContainer}>
-        <View style={styles.imgContainer}>
-          <Image
-            source={{uri: book.image}}
-            style={styles.image}
-            resizeMode="contain"
-          />
+      {book && book != '' && (
+        <View style={styles.rowContainer}>
+          <View style={styles.imgContainer}>
+            <Image
+              source={
+                {book}
+                  ? {uri: book.cover['url']}
+                  : require('../../assets/images/loading.gif')
+              }
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{book?.title || 'Cargando...'}</Text>
+            <Text style={styles.subtitle}>{book?.author || 'Cargando...'}</Text>
+          </View>
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{book.title}</Text>
-          <Text style={styles.subtitle}>{book.subtitle}</Text>
-        </View>
-      </View>
+      )}
     </TouchableOpacity>
   );
 };

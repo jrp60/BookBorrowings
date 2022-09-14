@@ -30,7 +30,6 @@ const ScannerTabView = () => {
       object => {
         console.log('object: ', object[0]);
 
-        //TODO: check
         setBookData({
           author: object[0].get('author'),
           title: object[0].get('title'),
