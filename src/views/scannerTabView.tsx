@@ -6,6 +6,7 @@ import ModalBookView from './ModalBookView';
 
 const ScannerTabView = () => {
   const [isbn, setIsbn] = useState('');
+  const [idCopy, setIdCopy] = useState('');
   const [showBottomContent, setShowBottomContent] = useState(false);
   const [bookData, setBookData] = useState({
     author: '',
@@ -13,49 +14,53 @@ const ScannerTabView = () => {
     isbn: '',
     cover: '',
   });
+  const queryBookValue: Parse.Object = null;
 
-  const readIsbn = async (isbn: string) => {
-    setIsbn(isbn);
-    console.log('ISBN leido: ', isbn);
-    checkIfExists(isbn);
+  const readID = async (id: string) => {
+    setIdCopy(id);
+    console.log('ID leido: ', id);
+    checkIfExists(id);
   };
 
-  const checkIfExists = async (isbn: string) => {
+  const checkIfExists = async (id: string) => {
     console.log('CHECKING....');
-    console.log('ISBN: ', isbn);
+    console.log('ID: ', id);
 
-    let query = new Parse.Query('book');
-    query.equalTo('isbn', isbn);
+    let query = new Parse.Query('copy');
+    //dVEEQ693IV
+    query.equalTo('book', id);
     await query.find().then(
       object => {
-        console.log('object: ', object[0]);
-
-        setBookData({
-          author: object[0].get('author'),
-          title: object[0].get('title'),
-          isbn: object[0].get('isbn'),
-          cover: object[0].get('cover'),
-        });
-
-        console.log('cover: ', object[0].get('cover'));
-
-        console.log('bookData in scanner: ', bookData);
-        console.log('Show modal now:');
-
-        showModal();
+        console.log('object: ', object);
 
         if (object.length == 0) {
           console.log('NO existe el libro');
 
           alert('No existe');
+        } else {
+          //console.log('object: ', object[0]);
+
+          // setBookData({
+          //   author: object[0].get('author'),
+          //   title: object[0].get('title'),
+          //   isbn: object[0].get('isbn'),
+          //   cover: object[0].get('cover'),
+          // });
+
+          //console.log('cover: ', object[0].get('cover'));
+          console.log('bookData in scanner: ', bookData);
+          console.log('Show modal now:');
+
+          showModal();
         }
+
         if (object.empty) {
           console.log('No existe 2');
-          alert('No existe');
+          alert('No existe 2');
         }
         if (object == null) {
           console.log('No existe 3');
-          alert('No existe');
+          alert('No existe 3');
         }
       },
       error => {
@@ -103,12 +108,13 @@ const ScannerTabView = () => {
 
   useEffect(() => {
     console.log('USE EFFECT in ScannerTabView');
-    readIsbn('9780194791830');
+    //readID('9780194791830');
+    readID('dVEEQ693IV');
   }, []);
 
   return (
     <QRCodeScanner
-      onRead={e => readIsbn(e.data)}
+      onRead={e => readID(e.data)}
       fadeIn={true}
       reactivate={true}
       reactivateTimeout={3000}

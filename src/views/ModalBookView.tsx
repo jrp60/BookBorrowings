@@ -74,6 +74,7 @@ const ModalBookView = ({bookData, isbn}) => {
     );
   };
 
+  //TODO este es distinto al de arriba
   const createBorrowing = () => {
     let borrowing = new Parse.Object('borrowings');
     //TODO: probar con .put y no .set
@@ -111,13 +112,17 @@ const ModalBookView = ({bookData, isbn}) => {
           <View style={styles.modalView}>
             <View style={styles.imgContainer}>
               <Image
-                source={{uri: bookData.cover.url()}}
+                source={
+                  bookData.cover
+                    ? {uri: bookData.cover.url()}
+                    : require('../../assets/images/loading.gif')
+                }
                 style={styles.logoBook}
                 resizeMode="contain"
               />
             </View>
-            <Text style={styles.title}>{bookData.title}</Text>
-            <Text style={styles.author}>{bookData.author}</Text>
+            <Text style={styles.title}>{book?.title || 'Cargando...'}</Text>
+            <Text style={styles.author}>{book?.author || 'Cargando...'}</Text>
             <DropdownBorrowing />
             <CustomButton
               onPress={() => {

@@ -24,7 +24,7 @@ const LibraryTabView = ({navigation}) => {
   );
 };
 
-const LibraryTabView1 = () => {
+const LibraryTabViewMAL = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Biblioteca" component={LibraryTabView} />
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LibraryTabView1;
+export default LibraryTabView;

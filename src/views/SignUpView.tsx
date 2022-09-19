@@ -29,7 +29,7 @@ const SignUpView = ({navigation}) => {
     if (user == '' && email == '' && password == '' && passwordConfirm == '') {
       if (validatePassword()) {
         //TODO - Sign up values
-        navigation.navigate('HomeView');
+        navigation.navigate('HomeTabsView');
       }
     } else {
       alert('Rellena todos los campos');

@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-  TextInput,
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
@@ -17,7 +16,7 @@ const LoginView = ({navigation}) => {
   const [password, setPassword] = useState('');
   const validateUser = () => {
     if (user === '' && password === '') {
-      navigation.navigate('HomeView');
+      navigation.navigate('HomeTabsView');
     } else {
       alert('Invalid user or password');
     }
