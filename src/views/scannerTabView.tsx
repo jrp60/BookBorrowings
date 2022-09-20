@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Parse from 'parse/react-native';
-import ModalBookView from './ModalBookView';
+import ModalBookComponent from '../components/ModalBookComponent';
 
 const ScannerTabView = () => {
   const [isbn, setIsbn] = useState('');
@@ -14,7 +14,8 @@ const ScannerTabView = () => {
     isbn: '',
     cover: '',
   });
-  const queryBookValue: Parse.Object = null;
+
+  //const queryBookValue: Parse.Object = null;
 
   const readID = async (id: string) => {
     setIdCopy(id);
@@ -101,7 +102,7 @@ const ScannerTabView = () => {
 
     return (
       <View>
-        <ModalBookView bookData={bookData} isbn={isbn} />
+        <ModalBookComponent bookData={bookData} isbn={isbn} />
       </View>
     );
   };
@@ -124,7 +125,7 @@ const ScannerTabView = () => {
       {...(showBottomContent && {
         bottomContent: (
           <View>
-            <ModalBookView bookData={bookData} isbn={isbn} />
+            <ModalBookComponent bookData={bookData} isbn={isbn} />
           </View>
         ),
       })}
